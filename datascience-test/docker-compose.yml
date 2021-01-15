@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.notebook
-    image: my_jupyter
+    image: mbuto / datascience-test
     container_name: my_jupyter
     ports:
       - "8888:8888"
