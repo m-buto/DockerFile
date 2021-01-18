@@ -5,12 +5,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.notebook
-    image: mbuto/datascience-test
+    image: jupyter/scipy-notebook
     container_name: my_jupyter
     ports:
       - "8888:8888"
     volumes:
       - ./docker/jupyter:/home/jovyan/work
       - /Volumes/GoogleDrive/マイドライブ/develop:/home/jovyan/csv
-    command: 
-      - start-notebook.sh --NotebookApp.token=''
+
+  db-tunnel:
+    container_name: db-tunnel
+    image: kingsquare/tunnel
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${HOME}/.ssh:/root/.ssh
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
+    command: "*:3306:offerbox-analysis-ins-200829.cpiinqcsbdth.ap-northeast-1.rds.amazonaws.com:3306 buto@buto"
