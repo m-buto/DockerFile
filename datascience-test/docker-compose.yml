@@ -5,10 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.notebook
-    image: mbuto / datascience-test
+    image: mbuto/datascience-test
     container_name: my_jupyter
     ports:
       - "8888:8888"
     volumes:
       - ./docker/jupyter:/home/jovyan/work
-    command: start-notebook.sh --NotebookApp.token=''
+      - /Volumes/GoogleDrive/マイドライブ/develop:/home/jovyan/csv
+    command: 
+      - start-notebook.sh --NotebookApp.token=''
