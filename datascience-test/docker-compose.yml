@@ -5,13 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.notebook
-    image: jupyter/scipy-notebook
+    image: my_jupyter
     container_name: my_jupyter
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
     ports:
       - "8888:8888"
     volumes:
       - ./docker/jupyter:/home/jovyan/work
       - /Volumes/GoogleDrive/マイドライブ/develop:/home/jovyan/csv
+      - /Volumes/GoogleDrive/マイドライブ/data:/home/jovyan/data
 
   db-tunnel:
     container_name: db-tunnel

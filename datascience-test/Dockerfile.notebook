@@ -2,8 +2,22 @@ FROM jupyter/scipy-notebook
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
+RUN pip install --no-cache-dir jupyterlab
+RUN jupyter serverextension enable --py jupyterlab
 RUN pip install --no-cache-dir ipython-sql
 RUN pip install --no-cache-dir imblearn
 RUN pip install --no-cache-dir mysql-connector-python
 RUN pip install --no-cache-dir sshtunnel
 RUN pip install --no-cache-dir openpyxl
+
+#RUN curl -L  "https://moji.or.jp/wp-content/ipafont/IPAexfont/ipaexg00401.zip" > font.zip
+#RUN unzip font.zip
+COPY ipaexg00401/ipaexg.ttf /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/
+#COPY matplotlibrc /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/matplotlibrc
+USER root
+RUN chown jovyan:users /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf
+#RUN chown jovyan:users /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/matplotlibrc
+RUN chmod 664 /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/ipaexg.ttf
+#RUN chmod 664 /opt/conda/lib/python3.8/site-packages/matplotlib/mpl-data/matplotlibrc
+USER jovyan
+RUN rm -r ./.cache
